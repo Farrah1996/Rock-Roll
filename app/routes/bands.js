@@ -3,15 +3,15 @@ import Route from '@ember/routing/route';
 import wait from '../utils/wait';
 
 export default Route.extend({
-  model: function () {
+  model() {
     var bands = this.store.findAll('band');
     return wait(bands, 3 * 1000);
   },
   actions: {
-    didTransition: function () {
+    didTransition() {
       document.title = 'Bands - Rock & Roll';
     },
-    createBand: function () {
+    createBand() {
       var route = this;
       var controller = this.get('controller');
       var band = this.store.createRecord('band',

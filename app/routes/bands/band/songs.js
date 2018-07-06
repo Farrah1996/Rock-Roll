@@ -8,19 +8,19 @@ export default Route.extend({
     noSongs: computed('model.songs.[]', function() {
         return this.get('model.songs.length') === 0;
         }),
-model: function() {
+model() {
     return this.modelFor('bands.band');
 },
-resetController: function(controller) {
+resetController(controller) {
     controller.set('songCreationStarted', false);
     },
 actions: {
-    didTransition: function() {
+    didTransition() {
         var band = this.modelFor('bands.band');
         var name = capitalizeWords(band.get('name'));
         document.title = `${band.get(name)} songs - Rock & Roll`;
         },
-    createSong: function() {
+    createSong() {
     var controller = this.get('controller');
     var band = this.modelFor('bands.band');
     var song = this.store.createRecord('song', {

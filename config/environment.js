@@ -5,6 +5,9 @@ module.exports = function(environment) {
     modulePrefix: 'again',
     environment,
     rootURL: '/',
+    firebase: {
+      appName: 'MyP1'
+    },
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
@@ -44,7 +47,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    // here you can enable a production-specific feature
+            // here you can enable a production-specific feature
   }
 
   return ENV;

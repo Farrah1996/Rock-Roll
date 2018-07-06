@@ -54,7 +54,9 @@ aria-label="search" aria-hidden="true"></span>
 </li>
   {{/if}} {{#each sortedSongs as |song|}}
   <li class="list-group-item song">
-    {{capitalize song.title}} {{star-rating item=song rating=song.rating on-click=(action "updateRating")}}
+    {{capitalize song.title}} 
+    {{star-rating item=song rating=song.rating on-click=(action
+"updateRating")}}
   </li>
   {{/each}} {{#if noSongs}}
   <li class="list-group-item empty-list">

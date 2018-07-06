@@ -1,11 +1,5 @@
 import Controller from '@ember/controller';
-import {
-  sort
-} from '@ember/object/computed';
-import {
-  isEmpty
-} from '@ember/utils';
-import {
+import { sort, empty, bool, or } from '@ember/object/computed';import {
   computed
 } from '@ember/object';
 import { capitalize } from 'again/helpers/capitalize';
@@ -26,11 +20,8 @@ export default Controller.extend({
     return options[this.get('sortBy')].split(',');
     }),  sortedSongs: sort('matchingSongs', 'sortProperties'),
   songCreationStarted: false,
-  canCreateSong: computed('songCreationStarted', 'model.songs.[]',
-    function () {
-      return this.get('songCreationStarted') ||
-        this.get('model.songs.length');
-    }),
+  hasSongs: bool('model.songs.length'),
+canCreateSong: or('songCreationStarted', 'hasSongs'),
 
     searchTerm: '',
 matchingSongs: computed('model.songs.@each.title', 'searchTerm',
@@ -43,9 +34,7 @@ return song.get('title').toLowerCase().indexOf(searchTerm) !==
 }),
 
   title: '',
-  isAddButtonDisabled: computed('title', function () {
-    return isEmpty(this.get('title'));
-  }),
+  isAddButtonDisabled: empty('title'),
 
   newSongPlaceholder: computed('model.name', function() {
     var bandName = this.get('model.name');
@@ -53,16 +42,14 @@ return song.get('title').toLowerCase().indexOf(searchTerm) !==
     }),
     
   actions: {
-    setSorting: function(option) {
+    setSorting(option) {
         this.set('sortBy', option);
         },
-    enableSongCreation: function () {
+    enableSongCreation() {
       this.set('songCreationStarted', true);
     },
-    updateRating: function (params) {
-      var song = params.item,
-        rating = params.rating;
-      if (song.get('rating') === rating) {
+    updateRating(params) {
+      let { item: song, rating } = params;     if (song.get('rating') === rating) {
         rating = 0;
       }
       song.set('rating', rating);
